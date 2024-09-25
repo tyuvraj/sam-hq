@@ -27,7 +27,7 @@ class SamPredictor:
           sam_model (Sam): The model to use for mask prediction.
         """
         super().__init__()
-        self.model = sam_model
+        self.model = sam_model.cuda()
         self.transform = ResizeLongestSide(sam_model.image_encoder.img_size)
         self.reset_image()
 
