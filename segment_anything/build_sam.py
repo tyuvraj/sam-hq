@@ -81,7 +81,7 @@ def build_sam_vit_t(checkpoint=None):
                 iou_head_depth=3,
                 iou_head_hidden_dim=256,
                 vit_dim=160,
-            ),
+            ).cuda(),
             pixel_mean=[123.675, 116.28, 103.53],
             pixel_std=[58.395, 57.12, 57.375],
         )
@@ -89,6 +89,7 @@ def build_sam_vit_t(checkpoint=None):
     mobile_sam.eval()
     if checkpoint is not None:
         with open(checkpoint, "rb") as f:
+            print('cuda:', torch.cuda.is_available())
             device = "cuda" if torch.cuda.is_available() else "cpu"
             state_dict = torch.load(f, map_location=device)
         info = mobile_sam.load_state_dict(state_dict, strict=False)
@@ -151,13 +152,14 @@ def _build_sam(
             iou_head_depth=3,
             iou_head_hidden_dim=256,
             vit_dim=encoder_embed_dim,
-        ),
+        ).cuda(),
         pixel_mean=[123.675, 116.28, 103.53],
         pixel_std=[58.395, 57.12, 57.375],
     )
     sam.eval()
     if checkpoint is not None:
         with open(checkpoint, "rb") as f:
+            print('cuda2:', torch.cuda.is_available())
             device = "cuda" if torch.cuda.is_available() else "cpu"
             state_dict = torch.load(f, map_location=device)
         info = sam.load_state_dict(state_dict, strict=False)
