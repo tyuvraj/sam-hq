@@ -62,13 +62,13 @@ def build_sam_vit_t(checkpoint=None):
                 mbconv_expand_ratio=4.0,
                 local_conv_size=3,
                 layer_lr_decay=0.8
-            ),
+            ).cuda(),
             prompt_encoder=PromptEncoder(
             embed_dim=prompt_embed_dim,
             image_embedding_size=(image_embedding_size, image_embedding_size),
             input_image_size=(image_size, image_size),
             mask_in_chans=16,
-            ),
+            ).cuda(),
             mask_decoder=MaskDecoderHQ(
                     num_multimask_outputs=3,
                     transformer=TwoWayTransformer(
@@ -76,7 +76,7 @@ def build_sam_vit_t(checkpoint=None):
                     embedding_dim=prompt_embed_dim,
                     mlp_dim=2048,
                     num_heads=8,
-                ),
+                ).cua(),
                 transformer_dim=prompt_embed_dim,
                 iou_head_depth=3,
                 iou_head_hidden_dim=256,
@@ -132,13 +132,13 @@ def _build_sam(
             global_attn_indexes=encoder_global_attn_indexes,
             window_size=14,
             out_chans=prompt_embed_dim,
-        ),
+        ).cuda(),
         prompt_encoder=PromptEncoder(
             embed_dim=prompt_embed_dim,
             image_embedding_size=(image_embedding_size, image_embedding_size),
             input_image_size=(image_size, image_size),
             mask_in_chans=16,
-        ),
+        ).cuda(),
         mask_decoder=MaskDecoderHQ(
             num_multimask_outputs=3,
             transformer=TwoWayTransformer(
@@ -146,7 +146,7 @@ def _build_sam(
                 embedding_dim=prompt_embed_dim,
                 mlp_dim=2048,
                 num_heads=8,
-            ),
+            ).cuda(),
             transformer_dim=prompt_embed_dim,
             iou_head_depth=3,
             iou_head_hidden_dim=256,
