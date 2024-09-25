@@ -40,11 +40,11 @@ class Sam(nn.Module):
           pixel_std (list(float)): Std values for normalizing pixels in the input image.
         """
         super().__init__()
-        self.image_encoder = image_encoder
-        self.prompt_encoder = prompt_encoder
-        self.mask_decoder = mask_decoder
-        self.register_buffer("pixel_mean", torch.Tensor(pixel_mean).view(-1, 1, 1), False)
-        self.register_buffer("pixel_std", torch.Tensor(pixel_std).view(-1, 1, 1), False)
+        self.image_encoder = image_encoder.cuda()
+        self.prompt_encoder = prompt_encoder.cuda()
+        self.mask_decoder = mask_decoder.cuda()
+        self.register_buffer("pixel_mean", torch.Tensor(pixel_mean).view(-1, 1, 1).cuda(), False)
+        self.register_buffer("pixel_std", torch.Tensor(pixel_std).view(-1, 1, 1).cuda(), False)
 
     @property
     def device(self) -> Any:
